@@ -99,9 +99,12 @@
     }
 
     public function advanced_search($searchData) {
-      // $selling_adds = array();
-      // $data = array();
-      // $query = "SELECT * FROM vehicle ";
+      $selling_adds = array();
+      $data = array();
+      $query = "SELECT * FROM vehicle ";
+      if($searchData->price != '') {
+        //$query .= "WHERE price "
+      }
 
       // $params = array("%$searchString%");
       // $statement = $this->connect->prepare($query);
