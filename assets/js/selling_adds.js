@@ -149,8 +149,8 @@ $(document).ready(function() {
 
   $(document).on('submit', '#advancedSearchForm', function(e) {
     e.preventDefault();
-    var price = $('#price_val').val();
-    var monet = $('#monet').val();
+    var price_min = $('#price_from').val();
+    var price_max = $('#price_to').val();
     var category = $('#category').val();
     var brand = $('#brand').val();
     var model = $('#model').val();
@@ -169,7 +169,7 @@ $(document).ready(function() {
     var el_window = $('#el_window').is(':checked');
     var computer = $('#computer').is(':checked');
     var xenon = $('#xenon').is(':checked');
-    var search_details = new searchModel(price, monet, category, brand, model, volume, power, power_units, fuel, engine_emission, transmission, drive, driven, steer_w, metalic, servo, tempomat, el_window, computer, xenon);
+    var search_details = new searchModel(price_min, price_max, category, brand, model, volume, power, power_units, fuel, engine_emission, transmission, drive, driven, steer_w, driven, metalic, servo, tempomat, el_window, computer, xenon);
     var searchData = JSON.stringify(search_details);
     var advanced_search = true;
     console.log(searchData);
@@ -179,7 +179,8 @@ $(document).ready(function() {
       data: {advanced_search:advanced_search,searchData:searchData},
       dataType: 'json',
       success: function(data) {
-        alert(data);
+        //alert(data);
+        console.log(data);
       }
     });
   });
@@ -198,9 +199,9 @@ $(document).ready(function() {
     });
   }
 
-  function searchModel(price, monet, category, brand, model, volume, power, power_units, fuel, engine_emission, transmission, drive, driven, steer_w, metalic, servo, tempomat, el_window, computer, xenon) {
-    this.price = price,
-    this.monet = monet,
+  function searchModel(price_min, price_max, category, brand, model, volume, power, power_units, fuel, engine_emission, transmission, drive, driven, steer_w, driven, metalic, servo, tempomat, el_window, computer, xenon) {
+    this.price_min = price_min,
+    this.price_max = price_max,
     this.category = category,
     this.brand = brand,
     this.model = model,

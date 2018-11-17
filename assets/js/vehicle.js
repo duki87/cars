@@ -1,4 +1,4 @@
-function vehicleModel(title, price, monet, price_other, category, brand, model, volume, power, power_units, fuel, engine_emission, transmission, transmission, drive, year, driven, seats, steer_w, color, color_int, int_type, owner, reg_exp, additional, description, photos_folder,featured_img, metalic, servo, tempomat, el_window, computer, xenon) {
+function vehicleModel(title, price, monet, price_other, category, brand, model, volume, power, power_units, fuel, engine_emission, transmission, drive, year, driven, seats, steer_w, color, color_int, int_type, owner, reg_exp, additional, description, photos_folder,featured_img, metalic, servo, tempomat, el_window, computer, xenon) {
   this.title = title,
   this.price = price,
   this.monet = monet,
@@ -267,7 +267,7 @@ $(document).ready(function() {
 
     if(price == '') {
       if(price_other !== '') {
-        price = price_other;
+        price = 0;
       } else {
         alert('Morati uneti cenu ili odabrati odgovarajuci opis!');
       }
@@ -278,6 +278,11 @@ $(document).ready(function() {
     } else {
         price = $('#price').val();
     }
+    var featured_img = $('.featured-img');
+    if(featured_img.length < 1) {
+      alert('Morate odabrati naslovnu fotografiju oglasa klikom na jednu od unetih fotografija!');
+    }
+
     var category = $('#select_category').val();
     var brand = $('#select_brand').val();
     var model = $('#select_model').val();
@@ -321,7 +326,7 @@ $(document).ready(function() {
     }
     var photos_folder = $('#preview_photos').attr('data-folderName');
     var featured_img = $('.featured-img').find('.vehicle-photos').data('imgloc');
-    var vehicle_data = new vehicleModel(title, price, monet, price_other, category, brand, model, volume, power, power_units, fuel, engine_emission, transmission, transmission, drive, year, driven, seats, steer_w, color, color_int, int_type, owner, reg_exp, additional, description, photos_folder, featured_img, metalicB, servoB, tempomatB, el_windowB, computerB, xenonB);
+    var vehicle_data = new vehicleModel(title, price, monet, price_other, category, brand, model, volume, power, power_units, fuel, engine_emission, transmission, drive, year, driven, seats, steer_w, color, color_int, int_type, owner, reg_exp, additional, description, photos_folder, featured_img, metalicB, servoB, tempomatB, el_windowB, computerB, xenonB);
     var vehicle_details = JSON.stringify(vehicle_data);
     var new_vehicle = true;
     $.ajax({
@@ -338,6 +343,7 @@ $(document).ready(function() {
           '</div>';
           $('#vehicle_message').html('<p>'+vehicle_message+'</p>');
           $('#add_vehicle')[0].reset();
+          $('#preview_photos').empty();
         } else {
           var vehicle_message ='<div class="alert alert-danger alert-dismissible fade show" role="alert">'+
           '<strong>Nesto se iskundacilo!</strong>'+

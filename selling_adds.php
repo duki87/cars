@@ -60,29 +60,46 @@ include('parts/header.php');
     });
   }
 
-  $(document).on('change', '#price', function(e) {
-    //e.preventDefault();
-    var price_value = $('#price').val();
-    $('#price_val').val(price_value);
+  $(document).on('change', '#price_min', function(e) {
+    e.preventDefault();
+    var price_value = $('#price_min').val();
+    $('#price_min_val').html(price_value);
+    $('#price_from').val(price_value);
+    $('#price_max').attr('min', price_value);
+    $('#price_max').attr('max', '100000');
   });
 
-  $(document).on('change', '#monet', function() {
-    var monet_val = $(this).val();
-    if(monet_val == 'dinar') {
-      $('#price').attr('data-monet', monet_val);
-      $('#price').attr('max', '1000000');
-      $('#price').attr('step', '10000');
-      $('#price').val('100000');
-      $('#price_val').val('');
-    } else {
-      $('#price').attr('data-monet', monet_val);
-      $('#price').attr('max', '50000');
-      $('#price').attr('step', '200');
-      $('#price').val('1000');
-      $('#price_val').val('');
-    }
+  $(document).on('change', '#price_max', function(e) {
+    e.preventDefault();
+    var price_value_max = $('#price_max').val();
+    $('#price_to').val(price_value_max);
+    $('#price_max').attr('data-price', price_value_max);
+    $('#price_max_val').html(price_value_max);
   });
-  
+
+  // $(document).on('change', '#price', function(e) {
+  //   //e.preventDefault();
+  //   var price_value = $('#price').val();
+  //   $('#price_val').val(price_value);
+  // });
+
+  // $(document).on('change', '#monet', function() {
+  //   var monet_val = $(this).val();
+  //   if(monet_val == 'dinar') {
+  //     $('#price').attr('data-monet', monet_val);
+  //     $('#price').attr('max', '1000000');
+  //     $('#price').attr('step', '10000');
+  //     $('#price').val('100000');
+  //     $('#price_val').val('');
+  //   } else {
+  //     $('#price').attr('data-monet', monet_val);
+  //     $('#price').attr('max', '50000');
+  //     $('#price').attr('step', '200');
+  //     $('#price').val('1000');
+  //     $('#price_val').val('');
+  //   }
+  // });
+
 </script>
 <script src="assets/js/selling_adds.js"></script>
 <?php

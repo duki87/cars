@@ -2,20 +2,17 @@
   <form class="" method="post" id="advancedSearchForm">
     <div class="row">
       <div class="form-group col-md-3">
-        <label for="price" style="" class="text-primary">Cena</label>
-        <input type="range" min="0" max="50000" step="200" value="1000" data-monet="evro" name="price" class="form-control custom-range" id="price">
-      </div>
-      <div class="form-group col-md-2">
-        <label for="price_val" class="text-primary">Iznos</label>
-        <input type="text" name="price_val" class="form-control" id="price_val" value="">
+        <label for="price" style="" class="text-primary">Cena od</label>
+        <input type="range" min="0" max="50000" step="200" value="0" data-monet="evro" name="price_min" class="form-control custom-range" id="price_min">
+        <input type="hidden" name="" id="price_from" value="">
+        <span class="text-info" id="price_min_val" data-price=""></span>
       </div>
 
-      <div class="form-group col-md-2">
-        <label for="monet" class="text-primary">Moneta</label>
-        <select class="form-control" name="monet" id="monet">
-          <option value="dinar">Dinar</option>
-          <option value="evro" selected>Evro</option>
-        </select>
+      <div class="form-group col-md-3">
+        <label for="monet" class="text-primary">Cena do</label>
+        <input type="range" step="200" value="" data-monet="evro" name="price_max" class="form-control custom-range" id="price_max">
+        <input type="hidden" name="" id="price_to" value="">
+        <span class="text-info" id="price_max_val" data-price=""></span>
       </div>
 
       <div class="form-group col-md-2">
@@ -25,7 +22,7 @@
           <option value="1000">Do 1000</option>
           <option value="2000">Do 2000</option>
           <option value="3000">Do 3000</option>
-          <option value="3000">Preko 3000</option>
+          <option value="4000">Do 4000</option>
         </select>
       </div>
 
@@ -33,13 +30,14 @@
         <label for="monet" class="text-primary">Snaga</label>
         <select class="form-control" name="power" id="power">
           <option value="">Izaberite</option>
-          <option value="1000">Do 50</option>
-          <option value="2000">Do 100</option>
-          <option value="3000">Preko 100</option>
+          <option value="50">Do 50</option>
+          <option value="100">Do 100</option>
+          <option value="200">Do 200</option>
+          <option value="300">Do 300</option>
         </select>
       </div>
 
-      <div class="form-group col-md-1">
+      <div class="form-group col-md-2">
         <label for="monet" class="text-primary">Snaga</label>
         <select class="form-control" name="power_units" id="power_units">
           <option value="KS">KS</option>
@@ -118,10 +116,11 @@
         <label for="monet" class="text-primary">Kilometraza</label>
         <select class="form-control" name="driven" id="driven">
           <option value="">Izaberite</option>
+          <option value="100000">Do 50000</option>
           <option value="100000">Do 100000</option>
           <option value="150000">Do 150000</option>
           <option value="200000">Do 200000</option>
-          <option value="more">Preko 200000</option>
+          <option value="300000">Do 200000</option>
         </select>
       </div>
 
@@ -130,22 +129,22 @@
       </div>
 
       <div class="col-md-2">
-        Metalik boja <input type="checkbox" name="metalic" id="metalic" value="metalik boja">
+        <span class="text-info">Metalik boja</span> <input type="checkbox" name="metalic" id="metalic" value="metalik boja">
       </div>
       <div class="col-md-2">
-        Servo volan <input type="checkbox" name="servo" id="servo" value="servo volan">
+        <span class="text-info">Servo volan</span> <input type="checkbox" name="servo" id="servo" value="servo volan">
       </div>
       <div class="col-md-2">
-        Tempomat <input type="checkbox" name="tempomat" id="tempomat" value="tempomat">
+        <span class="text-info">Tempomat</span> <input type="checkbox" name="tempomat" id="tempomat" value="tempomat">
       </div>
       <div class="col-md-2">
-        Podizaci <input type="checkbox" name="el_window" id="el_window" value="podizaci">
+        <span class="text-info">Podizaci</span> <input type="checkbox" name="el_window" id="el_window" value="podizaci">
       </div>
       <div class="col-md-2">
-        Racunar <input type="checkbox" name="computer" id="computer" value="racunar">
+        <span class="text-info">Racunar</span> <input type="checkbox" name="computer" id="computer" value="racunar">
       </div>
       <div class="col-md-2">
-        Ksenon <input type="checkbox" name="xenon" id="xenon" value="ksenon farovi" class="">
+        <span class="text-info">Ksenon</span> <input type="checkbox" name="xenon" id="xenon" value="ksenon farovi" class="">
       </div>
     </div>
     <div class="mt-2">

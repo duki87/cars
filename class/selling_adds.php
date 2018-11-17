@@ -35,13 +35,20 @@
             $monet_txt = 'dinara';
           }
         }
+        $price = $row["price"];
+        if($price == 0) {
+          $price_to_display = $row['price_other'];
+        } else {
+          $price_to_display = $price .' '. $row["monet"];
+        }
+
         $sponsored[] = '
         <div class="col-md-3 col-sm-3">
           <div class="card card-custom-sponsored flex-fill border border-warning">
             <h5 class="card-header bg-warning">'.$row["title"].'</h5>
             <img class="card-img-top" src="images/vehicle_images/'.$row["featured_image"].'" alt="fotografija vozila">
             <div class="card-body">
-              <p class="card-text"><strong>Cena: '.$row["price"].' '.$monet_txt.'</strong></p>
+              <p class="card-text"><strong>Cena: '.$price_to_display.'</strong></p>
               <p class="card-text"><strong>Godiste: '.$row["year"].'</strong></p>
               <a href="oglas.php?naziv='.$titleUrl.'&id='.$row['vehicle_id'].'" class="btn btn-warning" style="">Pogledaj oglas</a>
             </div>
@@ -73,6 +80,13 @@
             $monet_txt = 'dinara';
           }
         }
+
+        $price = $row2["price"];
+        if($price == 0) {
+          $price_to_display = $row2['price_other'];
+        } else {
+          $price_to_display = $price .' '. $monet_txt;
+        }
         $other[] = '
         <div class="col-md-6 mb-4">
           <div class="card flex-row flex-wrap">
@@ -81,7 +95,7 @@
             </div>
             <div class="card-block px-2">
               <h4 class="text-warning">'.$row2["title"].'</h4>
-              <p class="text-primary"><strong>Cena: '.$row2["price"].' '.$monet_txt.'</strong></p>
+              <p class="text-primary"><strong>Cena: '.$price_to_display.'</strong></p>
               <p class="text-primary"><strong>Godiste: '.$row2["year"].'</strong></p>
               <a href="'.$this->url.'oglas.php?naziv='.$titleUrl.'&id='.$row2['vehicle_id'].'" class="btn btn-warning" style="">Pogledaj oglas</a>
             </div>

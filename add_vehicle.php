@@ -22,7 +22,7 @@
       <div class="col-md-2">
         <div class="form-group">
           <label for="price">Cena</label>
-          <input type="number" step="0.1" min="1" name="price" id="price" value="" class="form-control" placeholder="Unesite cenu">
+          <input type="text" step="0.1" min="1" name="price" id="price" value="" class="form-control" placeholder="Unesite cenu" onkeypress = "return AllowNumbersOnly(event)">
         </div>
       </div>
 
@@ -80,14 +80,14 @@
       <div class="col-md-3">
         <div class="form-group">
           <label for="volume">Zapremina motora* (cm<sup>3</sup>)</label>
-          <input type="number" name="volume" id="volume" value="" class="form-control" min="1"  >
+          <input type="text" name="volume" id="volume" value="" class="form-control" min="1"  onkeypress="return AllowNumbersOnly(event)">
         </div>
       </div>
 
       <div class="col-md-3">
         <div class="form-group">
           <label for="power">Snaga motora*</label>
-          <input type="number" name="power" id="power" value="" class="form-control" min="1" >
+          <input type="text" name="power" id="power" value="" class="form-control" min="1" onkeypress="return AllowNumbersOnly(event)">
         </div>
       </div>
 
@@ -162,7 +162,7 @@
       <div class="col-md-2">
         <div class="form-group">
           <label for="driven">Kilometraza*</label>
-          <input type="number" min="1" name="driven" id="driven" value="" class="form-control" required>
+          <input type="text" min="1" name="driven" id="driven" value="" class="form-control" required onkeypress="return AllowNumbersOnly(event)">
         </div>
       </div>
 
@@ -306,6 +306,14 @@
   </form>
 </div>
 <script src="assets/js/vehicle.js"></script>
+<script type="text/javascript">
+  function AllowNumbersOnly(e) {
+    var code = (e.which) ? e.which : e.keyCode;
+    if (code > 31 && (code < 48 || code > 57)) {
+      e.preventDefault();
+    }
+  }
+</script>
 <?php
   include('parts/footer.php');
 ?>

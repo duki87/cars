@@ -55,7 +55,7 @@
       $vehicle_details = json_decode($vehicle_data);
       $user_id = $_SESSION['user']['user_id'];
       $date_added = date("Y-m-d h:i:s");
-      $sponsored = 1;
+      $sponsored = 0;
       $query = "INSERT INTO vehicle (title, price, monet, price_other, category_id, brand_id, model_id, user_id, volume, power, power_units, fuel, engine_emission, transmission, drive, year, driven, seats, steer_w, color, color_int, int_type, owner, reg_exp, additional, img_folder, featured_image, description, sponsored, date_added)
       VALUES (:title, :price, :monet, :price_other, :category_id, :brand_id, :model_id, :user_id, :volume, :power, :power_units, :fuel, :engine_emission, :transmission, :drive, :year, :driven, :seats, :steer_w, :color, :color_int, :int_type, :owner, :reg_exp, :additional, :img_folder, :featured_image, :description, :sponsored, :date_added)";
       $statement = $this->connect->prepare($query);
@@ -90,7 +90,7 @@
           'featured_image'      => $vehicle_details->featured_img,
           'description'         => $vehicle_details->description,
           'sponsored'           => $sponsored,
-          'date_added'          => $date_added
+          'date_added'          => $date_added,
         )
       );
       $result = $statement->fetchAll();
