@@ -49,6 +49,8 @@ include('parts/header.php');
       <select class="form-control" name="sorting" id="sorting">
         <option value="price_asc">Prvo jeftinije</option>
         <option value="price_desc">Prvo skuplje</option>
+        <option value="name_asc">A-Z</option>
+        <option value="name_desc">Z-A</option>
       </select>
     </div>
   </div>
@@ -93,10 +95,12 @@ include('parts/header.php');
     var per_page = 4;
     var chunk_to_display = 0;
     var sqlTable = 'vehicle';
+    var sorting = 'random';
     var pagination = {
       "per_page" : per_page,
       "chunk_to_display" : chunk_to_display,
-      "sqlTable" : sqlTable
+      "sqlTable" : sqlTable,
+      "sorting" : sorting
     };
     var pagination_data = JSON.stringify(pagination);
     $.ajax({
@@ -115,12 +119,14 @@ include('parts/header.php');
     event.preventDefault();
     var per_page = parseInt($('#per_page').val());
     var sqlTable = 'vehicle';
+    var sorting = $('#sorting').val();
     var chunkid = parseInt($(this).attr('data-chunkid'));
     var get_selling_adds = true;
     var pagination = {
       "per_page" : per_page,
       "chunk_to_display" : chunkid,
-      "sqlTable" : sqlTable
+      "sqlTable" : sqlTable,
+      "sorting" : sorting
     };
     var pagination_data = JSON.stringify(pagination);
     $.ajax({
@@ -144,12 +150,14 @@ include('parts/header.php');
     event.preventDefault();
     var per_page = parseInt($('#per_page').val());
     var sqlTable = 'vehicle';
+    var sorting = $('#sorting').val();
     var chunkid = parseInt($(this).attr('data-chunkid')) + 1;
     var get_selling_adds = true;
     var pagination = {
       "per_page" : per_page,
       "chunk_to_display" : chunkid,
-      "sqlTable" : sqlTable
+      "sqlTable" : sqlTable,
+      "sorting" : sorting
     };
     var pagination_data = JSON.stringify(pagination);
     $.ajax({
@@ -171,11 +179,13 @@ include('parts/header.php');
     var per_page = parseInt($('#per_page').val());
     var sqlTable = 'vehicle';
     var chunkid = parseInt($(this).attr('data-chunkid')) - 1;
+    var sorting = $('#sorting').val();
     var get_selling_adds = true;
     var pagination = {
       "per_page" : per_page,
       "chunk_to_display" : chunkid,
-      "sqlTable" : sqlTable
+      "sqlTable" : sqlTable,
+      "sorting" : sorting
     };
     var pagination_data = JSON.stringify(pagination);
     $.ajax({
@@ -196,12 +206,42 @@ include('parts/header.php');
     event.preventDefault();
     var per_page = parseInt($('#per_page').val());
     var sqlTable = 'vehicle';
+    var sorting = $('#sorting').val();
     var chunkid = 0;
     var get_selling_adds = true;
     var pagination = {
       "per_page" : per_page,
       "chunk_to_display" : chunkid,
-      "sqlTable" : sqlTable
+      "sqlTable" : sqlTable,
+      "sorting" : sorting
+    };
+    var pagination_data = JSON.stringify(pagination);
+    $.ajax({
+      url: "process/sadds_process.php",
+      method: 'post',
+      data: {pagination_data:pagination_data,get_selling_adds:get_selling_adds},
+      dataType: 'json',
+      success: function(data) {
+        $('#other_adds').html('');
+        $('#other_adds').append(data.data);
+        $('#pagination_area').html('');
+        $('#pagination_area').append(data.paginations);
+      }
+    });
+  });
+
+  $(document).on('change', '#sorting', function(event) {
+    event.preventDefault();
+    var per_page = parseInt($('#per_page').val());
+    var sqlTable = 'vehicle';
+    var chunkid = 0;
+    var get_selling_adds = true;
+    var sorting = $(this).val();
+    var pagination = {
+      "per_page" : per_page,
+      "chunk_to_display" : chunkid,
+      "sqlTable" : sqlTable,
+      "sorting" : sorting
     };
     var pagination_data = JSON.stringify(pagination);
     $.ajax({

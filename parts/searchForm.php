@@ -149,7 +149,7 @@
     </div>
     <div class="mt-2">
       <button type="submit" id="submit_advancedSearchForm" class="btn btn-success pl-2 pr-2" name="submit_advancedSearchForm"><i class="fas fa-search"></i> Pretrazi oglase</button>
-      <button type="button" class="btn btn-secondary pl-2 pr-2" name="reset" id="reset">Resetuj</button>
+      <button type="button" class="btn btn-secondary pl-2 pr-2" name="formReset" id="formReset">Resetuj</button>
     </div>
   </form>
 </div>

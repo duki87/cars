@@ -155,7 +155,7 @@
 
       $response['data'] = $records;
       $response['total_pages'] = $total_pages;
-      $response['chunks'] = $chunks;
+      //$response['chunks'] = $chunks;
       $response['paginations'] = $paginations;
       return json_encode($response);
     }

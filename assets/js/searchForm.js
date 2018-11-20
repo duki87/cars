@@ -171,18 +171,18 @@ $(document).ready(function() {
     }
   });
 
-  //get selling_adds
-  function get_selling_adds() {
-    var get_selling_adds = 1;
-    $.ajax({
-      url: "process/sadds_process.php",
-      method: 'post',
-      data: {get_selling_adds:get_selling_adds},
-      dataType: 'json',
-      success: function(data) {
-        $('#other_adds').append(data.other);
-      }
-    });
-  }
+  // //get selling_adds
+  // function get_selling_adds() {
+  //   var get_selling_adds = 1;
+  //   $.ajax({
+  //     url: "process/sadds_process.php",
+  //     method: 'post',
+  //     data: {get_selling_adds:get_selling_adds},
+  //     dataType: 'json',
+  //     success: function(data) {
+  //       $('#other_adds').append(data.other);
+  //     }
+  //   });
+  // }
 
 });

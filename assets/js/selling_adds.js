@@ -179,10 +179,29 @@ $(document).ready(function() {
       data: {advanced_search:advanced_search,searchData:searchData},
       dataType: 'json',
       success: function(data) {
-        //alert(data);
         console.log(data);
+        if(data == '') {
+          $('#other_adds').html('');
+          $('#pagination_area').html('');
+          $('#other_adds').append('<h2 class="text-warning mx-auto">Zao nam je, za zadate kriterijume pretrage nismo pronasli rezultate.</h2>');
+        } else {
+          $('#other_adds').html('');
+          $('#other_adds').append(data);
+          $('#pagination_area').html('');
+          //$('#pagination_area').append(data.paginations);
+        }
       }
     });
+  });
+
+  $(document).on('click', '#formReset', function(e) {
+    e.preventDefault();
+    $('#advancedSearchForm')[0].reset();
+    // $('#price_min').val(0);
+    // $('#price_max').val(0);
+    // $('#price_max_val').val(0);
+    // $('#price_min_val').val(0);
+    get_selling_adds();
   });
 
   //get selling_adds_with_pagination
@@ -191,10 +210,12 @@ $(document).ready(function() {
     var per_page = 4;
     var chunk_to_display = 0;
     var sqlTable = 'vehicle';
+    var sorting = 'random';
     var pagination = {
       "per_page" : per_page,
       "chunk_to_display" : chunk_to_display,
-      "sqlTable" : sqlTable
+      "sqlTable" : sqlTable,
+      "sorting" : sorting
     };
     var pagination_data = JSON.stringify(pagination);
     $.ajax({
@@ -203,7 +224,9 @@ $(document).ready(function() {
       data: {get_selling_adds:get_selling_adds,pagination_data:pagination_data},
       dataType: 'json',
       success: function(data) {
+        $('#other_adds').html('');
         $('#other_adds').append(data.data);
+        $('#pagination_area').html('');
         $('#pagination_area').append(data.paginations);
       }
     });

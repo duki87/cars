@@ -17,9 +17,21 @@
       $pagination = json_decode($pagination_data);
       $per_page = $pagination->per_page;
       $chunk = $pagination->chunk_to_display;
+      $sorting = $pagination->sorting;
       $other = array();
+      $query = '';
+      if($sorting == 'price_desc') {
+        $query = "SELECT * FROM vehicle LEFT JOIN users ON users.user_id = vehicle.user_id WHERE sponsored = 0 ORDER BY price DESC";
+      } elseif($sorting == 'price_asc') {
+        $query = "SELECT * FROM vehicle LEFT JOIN users ON users.user_id = vehicle.user_id WHERE sponsored = 0 ORDER BY price ASC";
+      } elseif($sorting == 'name_asc') {
+        $query = "SELECT * FROM vehicle LEFT JOIN users ON users.user_id = vehicle.user_id WHERE sponsored = 0 ORDER BY title ASC";
+      } elseif($sorting == 'name_asc') {
+        $query = "SELECT * FROM vehicle LEFT JOIN users ON users.user_id = vehicle.user_id WHERE sponsored = 0 ORDER BY title ASC";
+      } else {
+        $query = "SELECT * FROM vehicle LEFT JOIN users ON users.user_id = vehicle.user_id WHERE sponsored = 0";
+      }
 
-      $query = "SELECT * FROM vehicle LEFT JOIN users ON users.user_id = vehicle.user_id WHERE sponsored = 0";
       $statement = $this->connect->prepare($query);
       $statement->execute();
       $result = $statement->fetchAll();
