@@ -185,16 +185,26 @@ $(document).ready(function() {
     });
   });
 
-  //get selling_adds
+  //get selling_adds_with_pagination
   function get_selling_adds() {
-    var get_selling_adds = 1;
+    var get_selling_adds = true;
+    var per_page = 4;
+    var chunk_to_display = 0;
+    var sqlTable = 'vehicle';
+    var pagination = {
+      "per_page" : per_page,
+      "chunk_to_display" : chunk_to_display,
+      "sqlTable" : sqlTable
+    };
+    var pagination_data = JSON.stringify(pagination);
     $.ajax({
       url: "process/sadds_process.php",
       method: 'post',
-      data: {get_selling_adds:get_selling_adds},
+      data: {get_selling_adds:get_selling_adds,pagination_data:pagination_data},
       dataType: 'json',
       success: function(data) {
-        $('#other_adds').append(data.other);
+        $('#other_adds').append(data.data);
+        $('#pagination_area').append(data.paginations);
       }
     });
   }

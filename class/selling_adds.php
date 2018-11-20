@@ -1,6 +1,7 @@
 <?php
   require_once('../db/db.php');
   require_once('../db/baseurl.php');
+  include('paginations.php');
   $baseurl = baseurl();
 
   class SellingAdds {
@@ -12,10 +13,67 @@
       $this->connect = $db->connect();
     }
 
-    public function get_selling_adds() {
-      $data = array();
-      $sponsored = array();
+    public function get_selling_adds($pagination_data) {
+      $pagination = json_decode($pagination_data);
+      $per_page = $pagination->per_page;
+      $chunk = $pagination->chunk_to_display;
       $other = array();
+
+      $query = "SELECT * FROM vehicle LEFT JOIN users ON users.user_id = vehicle.user_id WHERE sponsored = 0";
+      $statement = $this->connect->prepare($query);
+      $statement->execute();
+      $result = $statement->fetchAll();
+      foreach ($result as $row) {
+        $originalDate = $row['date_added'];
+        $newDate = date("d.m.Y.", strtotime($originalDate));
+        $title = $row["title"];
+        $titleArr = explode(" ", $title);
+        $titleUrl = strtolower(implode("-",$titleArr));
+        $monet_txt = '';
+        $monet = $row['monet'];
+        if($monet != '') {
+          if($monet == 'evro') {
+            $monet_txt = 'evra';
+          } else {
+            $monet_txt = 'dinara';
+          }
+        }
+
+        $price = $row["price"];
+        if($price == 0) {
+          $price_to_display = $row['price_other'];
+        } else {
+          $price_to_display = $price .' '. $monet_txt;
+        }
+        $other[] = '
+        <div class="col-md-6 mb-4">
+          <div class="card flex-row flex-wrap">
+            <div class="card-header border-0">
+              <img class="card-img-top" src="images/vehicle_images/'.$row["featured_image"].'" alt="">
+            </div>
+            <div class="card-block px-2">
+              <h4 class="text-warning">'.$row["title"].'</h4>
+              <p class="text-primary"><strong>Cena: '.$price_to_display.'</strong></p>
+              <p class="text-primary"><strong>Godiste: '.$row["year"].'</strong></p>
+              <a href="'.$this->url.'oglas.php?naziv='.$titleUrl.'&id='.$row['vehicle_id'].'" class="btn btn-warning" style="">Pogledaj oglas</a>
+            </div>
+            <div class="w-100"></div>
+            <div class="card-footer w-100 text-muted mt-1">
+              Oglas postavljen '.$newDate.'
+              <span class="float-right">'.$row["name"].' '.$row["last_name"].'</span>
+            </div>
+          </div>
+        </div><br>
+        ';
+      }
+      //$data['other'] = $other;
+      //echo json_encode($data);
+      $pagination = new Pagination();
+      return $pagination->pagination_for_adds($per_page, $chunk, $other);
+    }
+
+    public function get_selling_adds_sponsored() {
+      $data = array();
       $query = "SELECT * FROM vehicle WHERE sponsored = 1 LIMIT 4";
       $statement = $this->connect->prepare($query);
       $statement->execute();
@@ -42,7 +100,7 @@
           $price_to_display = $price .' '. $row["monet"];
         }
 
-        $sponsored[] = '
+        $data[] = '
         <div class="col-md-3 col-sm-3">
           <div class="card card-custom-sponsored flex-fill border border-warning">
             <h5 class="card-header bg-warning">'.$row["title"].'</h5>
@@ -59,57 +117,7 @@
         </div>
         ';
       }
-      $data['sponsored'] = $sponsored;
-
-      $query2 = "SELECT * FROM vehicle LEFT JOIN users ON users.user_id = vehicle.user_id WHERE sponsored = 0";
-      $statement2 = $this->connect->prepare($query2);
-      $statement2->execute();
-      $result2 = $statement2->fetchAll();
-      foreach ($result2 as $row2) {
-        $originalDate = $row2['date_added'];
-        $newDate = date("d.m.Y.", strtotime($originalDate));
-        $title = $row2["title"];
-        $titleArr = explode(" ", $title);
-        $titleUrl = strtolower(implode("-",$titleArr));
-        $monet_txt = '';
-        $monet = $row2['monet'];
-        if($monet != '') {
-          if($monet == 'evro') {
-            $monet_txt = 'evra';
-          } else {
-            $monet_txt = 'dinara';
-          }
-        }
-
-        $price = $row2["price"];
-        if($price == 0) {
-          $price_to_display = $row2['price_other'];
-        } else {
-          $price_to_display = $price .' '. $monet_txt;
-        }
-        $other[] = '
-        <div class="col-md-6 mb-4">
-          <div class="card flex-row flex-wrap">
-            <div class="card-header border-0">
-              <img class="card-img-top" src="images/vehicle_images/'.$row2["featured_image"].'" alt="">
-            </div>
-            <div class="card-block px-2">
-              <h4 class="text-warning">'.$row2["title"].'</h4>
-              <p class="text-primary"><strong>Cena: '.$price_to_display.'</strong></p>
-              <p class="text-primary"><strong>Godiste: '.$row2["year"].'</strong></p>
-              <a href="'.$this->url.'oglas.php?naziv='.$titleUrl.'&id='.$row2['vehicle_id'].'" class="btn btn-warning" style="">Pogledaj oglas</a>
-            </div>
-            <div class="w-100"></div>
-            <div class="card-footer w-100 text-muted mt-1">
-              Oglas postavljen '.$newDate.'
-              <span class="float-right">'.$row2["name"].' '.$row2["last_name"].'</span>
-            </div>
-          </div>
-        </div><br>
-        ';
-      }
-      $data['other'] = $other;
-      echo json_encode($data);
+      return json_encode($data);
     }
 
     public function get_selling_add_details($id) {
